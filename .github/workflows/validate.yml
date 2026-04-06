@@ -1,0 +1,84 @@
+name: Validate Addon JSON
+
+on:
+  pull_request:
+    paths:
+      - 'addons/**/*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate addon JSON files
+        shell: bash
+        run: |
+          set -e
+          ERRORS=0
+          for json_file in $(find addons -name '*.json' -type f); do
+            addon_dir=$(dirname "$json_file")
+            dir_name=$(basename "$addon_dir")
+            file_name=$(basename "$json_file" .json)
+            echo "────────────────────────────────────"
+            echo "Validating: $json_file"
+            if ! python3 -m json.tool "$json_file" > /dev/null 2>&1; then
+              echo "FAIL: Invalid JSON syntax"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            echo "  OK: Valid JSON syntax"
+            MISSING=$(JSON_FILE="$json_file" python3 -c "
+          import json, os
+          with open(os.environ['JSON_FILE']) as f:
+              data = json.load(f)
+          required = ['manifest', 'search', 'streamUrl']
+          missing = [k for k in required if k not in data]
+          if 'manifest' in data:
+              for k in ['id', 'name']:
+                  if k not in data['manifest']:
+                      missing.append('manifest.' + k)
+          if 'search' in data and 'steps' not in data['search']:
+              missing.append('search.steps')
+          if 'streamUrl' in data:
+              if 'steps' not in data['streamUrl']:
+                  missing.append('streamUrl.steps')
+              if 'result' not in data['streamUrl']:
+                  missing.append('streamUrl.result')
+          print(','.join(missing) if missing else '')
+          ")
+            if [ -n "$MISSING" ]; then
+              echo "FAIL: Missing required keys: $MISSING"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            echo "  OK: All required keys present"
+            ADDON_ID=$(JSON_FILE="$json_file" python3 -c "
+          import json, os
+          with open(os.environ['JSON_FILE']) as f:
+              print(json.load(f)['manifest']['id'])
+          ")
+            if [ "$ADDON_ID" != "$dir_name" ]; then
+              echo "FAIL: manifest.id ('$ADDON_ID') != directory name ('$dir_name')"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            echo "  OK: manifest.id matches directory name"
+            if [ "$file_name" != "$ADDON_ID" ]; then
+              echo "  WARN: File name ('$file_name.json') != manifest.id ('$ADDON_ID.json')"
+            fi
+            if [ ! -f "$addon_dir/README.md" ]; then
+              echo "  WARN: No README.md in $addon_dir/"
+            else
+              echo "  OK: README.md present"
+            fi
+            echo "  OK: All checks passed"
+          done
+          echo ""
+          if [ $ERRORS -gt 0 ]; then
+            echo "FAILED: $ERRORS error(s) found"
+            exit 1
+          else
+            echo "All addons validated successfully"
+          fi

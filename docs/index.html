@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamujTo | Komunitní doplňky</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #009688;
+            --primary-light: #4db6ac;
+            --primary-dark: #00796b;
+            --on-primary: #ffffff;
+            --surface: #121212;
+            --surface-variant: #1e1e1e;
+            --surface-bright: #2a2a2a;
+            --on-surface: #e0e0e0;
+            --on-surface-variant: #b0b0b0;
+            --background: #000000;
+            --error: #cf6679;
+            --warning: #ff9800;
+            --border-radius: 16px;
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background);
+            color: var(--on-surface);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--on-surface);
+        }
+
+        .logo-container i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-container span {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-container .subtitle {
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--on-surface-variant);
+            margin-left: 0.25rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--on-surface-variant);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover { color: var(--primary); }
+
+        .btn-github {
+            background-color: var(--surface-variant);
+            color: var(--on-surface);
+            padding: 0.6rem 1.25rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-github:hover {
+            background-color: var(--surface-bright);
+            transform: scale(1.05);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 9rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(circle at top center, rgba(0, 150, 136, 0.12) 0%, transparent 65%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+        }
+
+        .hero h1 .accent { color: var(--primary); }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--on-surface-variant);
+            max-width: 650px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--on-surface-variant);
+            margin-top: 0.25rem;
+        }
+
+        /* Search / Filter */
+        .controls {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--on-surface-variant);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            background: var(--surface-variant);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--on-surface);
+            font-size: 1rem;
+            font-family: var(--font-family);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-box input::placeholder { color: var(--on-surface-variant); }
+        .search-box input:focus { border-color: var(--primary); }
+
+        .filter-chips {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            background: var(--surface-variant);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--on-surface-variant);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-family);
+        }
+
+        .chip:hover { border-color: var(--primary); color: var(--on-surface); }
+        .chip.active { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+
+        /* Grid */
+        .addons-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            flex: 1;
+        }
+
+        .addon-count {
+            font-size: 0.9rem;
+            color: var(--on-surface-variant);
+            margin-bottom: 1.5rem;
+        }
+
+        .addons-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Card */
+        .addon-card {
+            background: var(--surface-variant);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 1.5rem;
+            transition: transform 0.2s, border-color 0.3s;
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+        }
+
+        .addon-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 150, 136, 0.3);
+        }
+
+        .addon-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.4rem;
+            color: var(--on-primary);
+        }
+
+        .addon-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .addon-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .addon-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .addon-version {
+            font-size: 0.75rem;
+            background: rgba(0, 150, 136, 0.15);
+            color: var(--primary-light);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .addon-type {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--on-surface-variant);
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .addon-description {
+            color: var(--on-surface-variant);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .addon-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .addon-author {
+            font-size: 0.8rem;
+            color: var(--on-surface-variant);
+        }
+
+        .addon-author i { margin-right: 0.3rem; }
+
+        .addon-caps {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }
+
+        .cap-badge {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--on-surface-variant);
+        }
+
+        .addon-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .btn-install {
+            padding: 0.6rem 1.25rem;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: var(--font-family);
+            transition: background-color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            white-space: nowrap;
+        }
+
+        .btn-install:hover {
+            background: var(--primary-light);
+            transform: scale(1.03);
+        }
+
+        .btn-install.copied {
+            background: #2e7d32;
+        }
+
+        .btn-readme {
+            padding: 0.45rem 1rem;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--on-surface-variant);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: var(--font-family);
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-readme:hover {
+            border-color: var(--primary);
+            color: var(--on-surface);
+        }
+
+        /* Loading / Empty */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--on-surface-variant);
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--on-surface-variant);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            opacity: 0.4;
+        }
+
+        /* How to install */
+        .how-to {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .how-to-card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+        }
+
+        .how-to-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .how-to-card h2 i { color: var(--primary); }
+
+        .install-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .install-step {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--on-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            color: var(--on-surface-variant);
+            line-height: 1.5;
+        }
+
+        .step-text strong { color: var(--on-surface); }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface-bright);
+            color: var(--on-surface);
+            padding: 0.85rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 150, 136, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast i { color: var(--primary); }
+
+        /* Footer */
+        footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--on-surface-variant);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--primary); }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { padding: 0.75rem 1rem; }
+            nav { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .hero-stats { gap: 1.5rem; }
+            .stat-value { font-size: 1.5rem; }
+            .controls { flex-direction: column; }
+            .addon-card { flex-direction: column; }
+            .addon-actions {
+                flex-direction: row;
+                align-self: stretch;
+            }
+            .btn-install { flex: 1; justify-content: center; }
+            .btn-readme { flex: 1; }
+            .install-steps { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-container">
+            <i class="fas fa-puzzle-piece"></i>
+            <span>StreamujTo</span>
+            <span class="subtitle">Doplňky</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="https://lksmasin.github.io/streamujto-app-website/" target="_blank">Hlavní web</a></li>
+                <li><a href="https://lksmasin.github.io/streamujto-app-website/addon-docs.html" target="_blank">Dokumentace</a></li>
+                <li><a href="#how-to">Jak nainstalovat</a></li>
+            </ul>
+        </nav>
+        <a href="https://github.com/lksmasin/streamujto-app-community-addons" target="_blank" class="btn-github">
+            <i class="fab fa-github"></i> GitHub
+        </a>
+    </header>
+
+    <section class="hero">
+        <h1>Komunitní <span class="accent">doplňky</span></h1>
+        <p>Rozšiřte StreamujTo o nová úložiště a zdroje. Všechny doplňky jsou vytvořeny komunitou a volně dostupné.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value" id="addon-count-stat">—</div>
+                <div class="stat-label">Doplňků</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="author-count-stat">—</div>
+                <div class="stat-label">Autorů</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="controls">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search" placeholder="Hledat doplňky..." autocomplete="off">
+        </div>
+        <div class="filter-chips">
+            <button class="chip active" data-filter="all">Vše</button>
+            <button class="chip" data-filter="auth">Přihlášení</button>
+            <button class="chip" data-filter="directStream">Přímý stream</button>
+        </div>
+    </div>
+
+    <section class="addons-section">
+        <div class="addon-count" id="results-count"></div>
+        <div class="addons-grid" id="addons-grid">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                Načítání doplňků...
+            </div>
+        </div>
+    </section>
+
+    <section class="how-to" id="how-to">
+        <div class="how-to-card">
+            <h2><i class="fas fa-download"></i> Jak nainstalovat doplněk</h2>
+            <div class="install-steps">
+                <div class="install-step">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Klikněte na <strong>Kopírovat URL</strong> u vybraného doplňku</div>
+                </div>
+                <div class="install-step">
+                    <div class="step-num">2</div>
+                    <div class="step-text">V aplikaci otevřete <strong>Nastavení → Doplňky úložišť</strong></div>
+                </div>
+                <div class="install-step">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Klepněte na <strong>+ Přidat → Zadat URL adresu</strong></div>
+                </div>
+                <div class="install-step">
+                    <div class="step-num">4</div>
+                    <div class="step-text">Vložte zkopírovanou URL a <strong>potvrďte</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-text">URL zkopírována do schránky</span>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://lksmasin.github.io/streamujto-app-website/">StreamujTo</a>
+            <a href="https://lksmasin.github.io/streamujto-app-website/addon-docs.html">Addon Docs</a>
+            <a href="https://github.com/lksmasin/streamujto-app-community-addons" target="_blank">GitHub</a>
+            <a href="https://github.com/lksmasin/streamujto-app-community-addons/blob/main/CONTRIBUTING.md" target="_blank">Přispět</a>
+        </div>
+        <div class="copyright">&copy; 2025–2026 StreamujTo Community</div>
+    </footer>
+
+    <script>
+        const REPO_OWNER = 'lksmasin';
+        const REPO_NAME = 'streamujto-app-community-addons';
+        const BRANCH = 'main';
+
+        let allAddons = [];
+        let activeFilter = 'all';
+
+        async function fetchAddons() {
+            try {
+                // List addon directories
+                const dirRes = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/addons?ref=${BRANCH}`);
+                if (!dirRes.ok) throw new Error('Failed to fetch addon list');
+                const dirs = await dirRes.json();
+                const addonDirs = dirs.filter(d => d.type === 'dir');
+
+                // Fetch each addon's JSON in parallel
+                const promises = addonDirs.map(async (dir) => {
+                    try {
+                        const jsonUrl = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/addons/${dir.name}/${dir.name}.json`;
+                        const res = await fetch(jsonUrl);
+                        if (!res.ok) return null;
+                        const data = await res.json();
+                        return {
+                            ...data,
+                            _dirName: dir.name,
+                            _jsonUrl: jsonUrl,
+                            _readmeUrl: `https://github.com/${REPO_OWNER}/${REPO_NAME}/blob/${BRANCH}/addons/${dir.name}/README.md`
+                        };
+                    } catch {
+                        return null;
+                    }
+                });
+
+                allAddons = (await Promise.all(promises)).filter(Boolean);
+                updateStats();
+                renderAddons();
+            } catch (err) {
+                document.getElementById('addons-grid').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Nepodařilo se načíst doplňky. Zkuste to později.</p>
+                        <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.5">${err.message}</p>
+                    </div>`;
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('addon-count-stat').textContent = allAddons.length;
+            const authors = new Set(allAddons.map(a => a.manifest?.author).filter(Boolean));
+            document.getElementById('author-count-stat').textContent = authors.size;
+        }
+
+        function getFilteredAddons() {
+            const query = document.getElementById('search').value.toLowerCase().trim();
+            return allAddons.filter(addon => {
+                const m = addon.manifest || {};
+                const matchesSearch = !query
+                    || (m.name || '').toLowerCase().includes(query)
+                    || (m.description || '').toLowerCase().includes(query)
+                    || (m.author || '').toLowerCase().includes(query)
+                    || (m.id || '').toLowerCase().includes(query);
+
+                const matchesFilter = activeFilter === 'all'
+                    || (m.capabilities || []).includes(activeFilter);
+
+                return matchesSearch && matchesFilter;
+            });
+        }
+
+        function getIconForType(type) {
+            const icons = {
+                'api': 'fa-cloud',
+                'scraper': 'fa-spider',
+                'torrent': 'fa-magnet',
+                'local': 'fa-folder',
+            };
+            return icons[type] || 'fa-puzzle-piece';
+        }
+
+        function renderAddons() {
+            const filtered = getFilteredAddons();
+            const grid = document.getElementById('addons-grid');
+            const countEl = document.getElementById('results-count');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <p>Žádné doplňky neodpovídají vašemu hledání.</p>
+                    </div>`;
+                countEl.textContent = '0 doplňků';
+                return;
+            }
+
+            countEl.textContent = `${filtered.length} ${filtered.length === 1 ? 'doplněk' : filtered.length < 5 ? 'doplňky' : 'doplňků'}`;
+
+            grid.innerHTML = filtered.map(addon => {
+                const m = addon.manifest || {};
+                const caps = (m.capabilities || []).map(c => `<span class="cap-badge">${c}</span>`).join('');
+                const icon = getIconForType(m.type);
+
+                return `
+                <div class="addon-card">
+                    <div class="addon-icon"><i class="fas ${icon}"></i></div>
+                    <div class="addon-body">
+                        <div class="addon-header">
+                            <span class="addon-name">${escapeHtml(m.name || m.id || addon._dirName)}</span>
+                            ${m.version ? `<span class="addon-version">v${escapeHtml(m.version)}</span>` : ''}
+                            ${m.type ? `<span class="addon-type">${escapeHtml(m.type)}</span>` : ''}
+                        </div>
+                        <div class="addon-description">${escapeHtml(m.description || 'Bez popisu')}</div>
+                        <div class="addon-meta">
+                            ${m.author ? `<span class="addon-author"><i class="fas fa-user"></i>${escapeHtml(m.author)}</span>` : ''}
+                            ${caps ? `<div class="addon-caps">${caps}</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="addon-actions">
+                        <button class="btn-install" onclick="copyUrl(this, '${addon._jsonUrl}')" title="Zkopírovat URL pro instalaci">
+                            <i class="fas fa-copy"></i> Kopírovat URL
+                        </button>
+                        <a href="${addon._readmeUrl}" target="_blank" class="btn-readme">
+                            <i class="fas fa-book"></i> README
+                        </a>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        async function copyUrl(btn, url) {
+            try {
+                await navigator.clipboard.writeText(url);
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i> Zkopírováno';
+                showToast('URL zkopírována do schránky');
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Kopírovat URL';
+                }, 2000);
+            } catch {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = url;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('URL zkopírována do schránky');
+            }
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-text').textContent = text;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', renderAddons);
+
+        document.querySelectorAll('.chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                activeFilter = chip.dataset.filter;
+                renderAddons();
+            });
+        });
+
+        // Init
+        fetchAddons();
+    </script>
+
+</body>
+</html>
