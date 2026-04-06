@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamujTo | Komunitní doplňky</title>
+    <title>KELP | Komunitní doplňky</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #009688;
-            --primary-light: #4db6ac;
-            --primary-dark: #00796b;
-            --on-primary: #ffffff;
-            --surface: #121212;
-            --surface-variant: #1e1e1e;
-            --surface-bright: #2a2a2a;
-            --on-surface: #e0e0e0;
-            --on-surface-variant: #b0b0b0;
+            --primary: #ffffff;
+            --accent: #E50914;
+            --on-primary: #000000;
+            --surface: #000000;
+            --surface-variant: #1A1A1C;
+            --surface-bright: #2A2A2E;
+            --on-surface: #ffffff;
+            --on-surface-variant: #AAAAAA;
             --background: #000000;
             --error: #cf6679;
             --warning: #ff9800;
-            --border-radius: 16px;
-            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --border-radius: 24px;
+            --font-family: 'Outfit', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,16 +38,16 @@
 
         /* Header */
         header {
-            padding: 1rem 2rem;
+            padding: 1.25rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: fixed;
             top: 0; left: 0; right: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .logo-container {
@@ -60,13 +60,14 @@
 
         .logo-container i {
             font-size: 1.5rem;
-            color: var(--primary);
+            color: var(--accent);
         }
 
         .logo-container span {
-            font-weight: 700;
-            font-size: 1.25rem;
+            font-weight: 800;
+            font-size: 1.4rem;
             letter-spacing: -0.5px;
+            text-transform: uppercase;
         }
 
         .logo-container .subtitle {
@@ -74,11 +75,12 @@
             font-size: 0.85rem;
             color: var(--on-surface-variant);
             margin-left: 0.25rem;
+            text-transform: none;
         }
 
         nav ul {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             list-style: none;
         }
 
@@ -94,14 +96,14 @@
         .btn-github {
             background-color: var(--surface-variant);
             color: var(--on-surface);
-            padding: 0.6rem 1.25rem;
-            border-radius: 2rem;
+            padding: 0.6rem 1.4rem;
+            border-radius: 3rem;
             font-weight: 600;
             text-decoration: none;
             transition: transform 0.2s, background-color 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -112,31 +114,32 @@
 
         /* Hero */
         .hero {
-            padding: 9rem 2rem 4rem;
+            padding: 10rem 2rem 5rem;
             text-align: center;
-            background: radial-gradient(circle at top center, rgba(0, 150, 136, 0.12) 0%, transparent 65%);
+            background: radial-gradient(circle at top center, rgba(229, 9, 20, 0.15) 0%, transparent 70%);
         }
 
         .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
+            font-size: 3.5rem;
+            font-weight: 900;
             margin-bottom: 1rem;
-            line-height: 1.15;
+            line-height: 1.1;
+            letter-spacing: -1px;
         }
 
-        .hero h1 .accent { color: var(--primary); }
+        .hero h1 .accent { color: var(--accent); }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--on-surface-variant);
-            max-width: 650px;
-            margin: 0 auto 2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
         }
 
         .hero-stats {
             display: flex;
             justify-content: center;
-            gap: 3rem;
+            gap: 4rem;
             margin-top: 2rem;
         }
 
@@ -145,24 +148,26 @@
         }
 
         .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             color: var(--primary);
         }
 
         .stat-label {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--on-surface-variant);
             margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Search / Filter */
         .controls {
-            max-width: 900px;
-            margin: 0 auto 2rem;
+            max-width: 1000px;
+            margin: 0 auto 2.5rem;
             padding: 0 2rem;
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
@@ -173,7 +178,7 @@
 
         .search-box i {
             position: absolute;
-            left: 1rem;
+            left: 1.25rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--on-surface-variant);
@@ -181,51 +186,52 @@
 
         .search-box input {
             width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            padding: 1rem 1rem 1rem 3.25rem;
             background: var(--surface-variant);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
             color: var(--on-surface);
             font-size: 1rem;
             font-family: var(--font-family);
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, background-color 0.2s;
         }
 
         .search-box input::placeholder { color: var(--on-surface-variant); }
-        .search-box input:focus { border-color: var(--primary); }
+        .search-box input:focus { border-color: var(--accent); background: var(--surface-bright); }
 
         .filter-chips {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
         }
 
         .chip {
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 3rem;
             background: var(--surface-variant);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--on-surface-variant);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
             font-family: var(--font-family);
+            font-weight: 600;
         }
 
-        .chip:hover { border-color: var(--primary); color: var(--on-surface); }
+        .chip:hover { border-color: var(--accent); color: var(--on-surface); }
         .chip.active { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
 
         /* Grid */
         .addons-section {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 0 2rem 4rem;
+            padding: 0 2rem 5rem;
             flex: 1;
         }
 
         .addon-count {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--on-surface-variant);
             margin-bottom: 1.5rem;
         }
@@ -233,37 +239,39 @@
         .addons-grid {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.25rem;
         }
 
         /* Card */
         .addon-card {
             background: var(--surface-variant);
             border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 1.5rem;
-            transition: transform 0.2s, border-color 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 1.75rem;
+            transition: transform 0.2s, border-color 0.3s, background-color 0.3s;
             display: flex;
-            gap: 1.25rem;
+            gap: 1.5rem;
             align-items: flex-start;
         }
 
         .addon-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(0, 150, 136, 0.3);
+            transform: translateY(-3px);
+            border-color: rgba(229, 9, 20, 0.4);
+            background-color: var(--surface-bright);
         }
 
         .addon-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1e1e1e, #333333);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            font-size: 1.4rem;
-            color: var(--on-primary);
+            font-size: 1.6rem;
+            color: var(--accent);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .addon-body {
@@ -275,133 +283,138 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
             flex-wrap: wrap;
         }
 
         .addon-name {
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 800;
         }
 
         .addon-version {
             font-size: 0.75rem;
-            background: rgba(0, 150, 136, 0.15);
-            color: var(--primary-light);
-            padding: 0.15rem 0.5rem;
-            border-radius: 6px;
-            font-weight: 600;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--on-surface);
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-weight: 700;
         }
 
         .addon-type {
             font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--on-surface-variant);
-            padding: 0.15rem 0.5rem;
-            border-radius: 6px;
+            background: rgba(229, 9, 20, 0.15);
+            color: #ff4d5a;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 800;
             letter-spacing: 0.5px;
         }
 
         .addon-description {
             color: var(--on-surface-variant);
-            font-size: 0.95rem;
-            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
 
         .addon-meta {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 1.25rem;
             flex-wrap: wrap;
         }
 
         .addon-author {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--on-surface-variant);
+            font-weight: 500;
         }
 
-        .addon-author i { margin-right: 0.3rem; }
+        .addon-author i { margin-right: 0.4rem; color: var(--accent); }
 
         .addon-caps {
             display: flex;
-            gap: 0.35rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
         .cap-badge {
-            font-size: 0.7rem;
-            padding: 0.15rem 0.45rem;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.06);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
             color: var(--on-surface-variant);
+            font-weight: 600;
         }
 
         .addon-actions {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.6rem;
             flex-shrink: 0;
             align-self: center;
         }
 
         .btn-install {
-            padding: 0.6rem 1.25rem;
-            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 14px;
             background: var(--primary);
             color: var(--on-primary);
             border: none;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.85rem;
+            font-weight: 700;
+            font-size: 0.9rem;
             font-family: var(--font-family);
             transition: background-color 0.2s, transform 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            justify-content: center;
+            gap: 0.5rem;
             white-space: nowrap;
         }
 
         .btn-install:hover {
-            background: var(--primary-light);
+            background: #f0f0f0;
             transform: scale(1.03);
         }
 
         .btn-install.copied {
             background: #2e7d32;
+            color: white;
         }
 
         .btn-readme {
-            padding: 0.45rem 1rem;
-            border-radius: 10px;
+            padding: 0.6rem 1.25rem;
+            border-radius: 14px;
             background: transparent;
             color: var(--on-surface-variant);
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-family: var(--font-family);
             transition: all 0.2s;
             text-decoration: none;
             text-align: center;
+            font-weight: 600;
         }
 
         .btn-readme:hover {
-            border-color: var(--primary);
+            border-color: var(--accent);
             color: var(--on-surface);
         }
 
         /* Loading / Empty */
         .loading {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             color: var(--on-surface-variant);
         }
 
         .loading i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
             display: block;
             animation: spin 1s linear infinite;
         }
@@ -410,144 +423,150 @@
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem;
             color: var(--on-surface-variant);
         }
 
         .empty-state i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
             display: block;
-            opacity: 0.4;
+            opacity: 0.3;
         }
 
         /* How to install */
         .how-to {
-            max-width: 900px;
-            margin: 0 auto 3rem;
+            max-width: 1000px;
+            margin: 0 auto 4rem;
             padding: 0 2rem;
         }
 
         .how-to-card {
-            background: var(--surface);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--surface-variant);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
         .how-to-card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.8rem;
+            font-weight: 800;
         }
 
-        .how-to-card h2 i { color: var(--primary); }
+        .how-to-card h2 i { color: var(--accent); }
 
         .install-steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
         }
 
         .install-step {
             display: flex;
-            gap: 0.75rem;
-            align-items: flex-start;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .step-num {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: var(--primary);
-            color: var(--on-primary);
+            background: var(--accent);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 800;
+            font-size: 0.9rem;
             flex-shrink: 0;
         }
 
         .step-text {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--on-surface-variant);
             line-height: 1.5;
         }
 
-        .step-text strong { color: var(--on-surface); }
+        .step-text strong { color: var(--on-surface); font-weight: 700; }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 2rem;
+            bottom: 3rem;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: var(--surface-bright);
             color: var(--on-surface);
-            padding: 0.85rem 1.5rem;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 150, 136, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            font-size: 1rem;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             z-index: 2000;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-weight: 600;
         }
 
         .toast.show { transform: translateX(-50%) translateY(0); }
-        .toast i { color: var(--primary); }
+        .toast i { color: var(--accent); }
 
         /* Footer */
         footer {
-            padding: 3rem 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             text-align: center;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
+            gap: 3rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
 
         .footer-links a {
             color: var(--on-surface-variant);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 1rem;
             transition: color 0.2s;
+            font-weight: 500;
         }
 
-        .footer-links a:hover { color: var(--primary); }
+        .footer-links a:hover { color: var(--accent); }
 
         .copyright {
-            color: rgba(255, 255, 255, 0.25);
-            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            header { padding: 0.75rem 1rem; }
+            header { padding: 1rem 1.5rem; }
             nav { display: none; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .hero-stats { gap: 1.5rem; }
-            .stat-value { font-size: 1.5rem; }
-            .controls { flex-direction: column; }
-            .addon-card { flex-direction: column; }
+            .hero { padding: 8rem 1.5rem 4rem; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .hero-stats { gap: 2rem; }
+            .stat-value { font-size: 2rem; }
+            .controls { flex-direction: column; gap: 1rem; }
+            .addon-card { flex-direction: column; padding: 1.5rem; }
             .addon-actions {
                 flex-direction: row;
                 align-self: stretch;
+                width: 100%;
             }
             .btn-install { flex: 1; justify-content: center; }
             .btn-readme { flex: 1; }
-            .install-steps { grid-template-columns: 1fr; }
+            .install-steps { grid-template-columns: 1fr; gap: 1.5rem; }
         }
     </style>
 </head>
@@ -556,13 +575,13 @@
     <header>
         <a href="#" class="logo-container">
             <i class="fas fa-puzzle-piece"></i>
-            <span>StreamujTo</span>
+            <span>KELP</span>
             <span class="subtitle">Doplňky</span>
         </a>
         <nav>
             <ul>
-                <li><a href="https://lksmasin.github.io/streamujto-app-website/" target="_blank">Hlavní web</a></li>
-                <li><a href="https://lksmasin.github.io/streamujto-app-website/addon-docs.html" target="_blank">Dokumentace</a></li>
+                <li><a href="https://kelp.page/" target="_blank">Hlavní web</a></li>
+                <li><a href="https://kelp.page/addon-docs.html" target="_blank">Dokumentace</a></li>
                 <li><a href="#how-to">Jak nainstalovat</a></li>
             </ul>
         </nav>
@@ -573,7 +592,7 @@
 
     <section class="hero">
         <h1>Komunitní <span class="accent">doplňky</span></h1>
-        <p>Rozšiřte StreamujTo o nová úložiště a zdroje. Všechny doplňky jsou vytvořeny komunitou a volně dostupné.</p>
+        <p>Rozšiřte KELP o nová úložiště a zdroje. Všechny doplňky jsou vytvořeny komunitou a volně dostupné.</p>
         <div class="hero-stats">
             <div class="stat">
                 <div class="stat-value" id="addon-count-stat">—</div>
@@ -639,12 +658,12 @@
 
     <footer>
         <div class="footer-links">
-            <a href="https://lksmasin.github.io/streamujto-app-website/">StreamujTo</a>
-            <a href="https://lksmasin.github.io/streamujto-app-website/addon-docs.html">Addon Docs</a>
+            <a href="https://kelp.page/">KELP App</a>
+            <a href="https://kelp.page/addon-docs.html">Addon Docs</a>
             <a href="https://github.com/lksmasin/streamujto-app-community-addons" target="_blank">GitHub</a>
             <a href="https://github.com/lksmasin/streamujto-app-community-addons/blob/main/CONTRIBUTING.md" target="_blank">Přispět</a>
         </div>
-        <div class="copyright">&copy; 2025–2026 StreamujTo Community</div>
+        <div class="copyright">&copy; 2025–2026 KELP Community</div>
     </footer>
 
     <script>

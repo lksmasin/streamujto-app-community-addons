@@ -1,4 +1,4 @@
-# Jak přispět do StreamujTo Community Addons
+# Jak přispět do KELP Community Addons
 
 Děkujeme za zájem o přispění! Tento dokument popisuje pravidla a postup pro přidání nového doplňku.
 
@@ -8,11 +8,11 @@ Děkujeme za zájem o přispění! Tento dokument popisuje pravidla a postup pro
 
 ### Povinné
 
-- [x] Validní JSON soubor podle [dokumentace addon systému](https://lksmasin.github.io/streamujto-app-website/addon-docs.html)
+- [x] Validní JSON soubor podle [dokumentace addon systému](https://kelp.page/addon-docs.html)
 - [x] Povinné sekce: `manifest`, `search`, `streamUrl`
 - [x] Unikátní `manifest.id` (kebab-case, bez mezer a diakritiky)
 - [x] README.md s popisem doplňku
-- [x] Testováno v aplikaci StreamujTo
+- [x] Testováno v aplikaci KELP
 
 ### Doporučené
 
@@ -64,7 +64,7 @@ https://raw.githubusercontent.com/lksmasin/streamujto-app-community-addons/main/
 2. Vytvořte novou větev: `git checkout -b addon/nazev-addonu`
 3. Vytvořte složku `addons/nazev-addonu/`
 4. Přidejte JSON soubor a README.md
-5. **Otestujte** doplněk v aplikaci StreamujTo (import z lokálního souboru)
+5. **Otestujte** doplněk v aplikaci KELP (import z lokálního souboru)
 6. Commitněte: `git commit -m "Add nazev-addonu addon"`
 7. Pushněte a otevřete **Pull Request**
 
@@ -105,6 +105,6 @@ CI automaticky ověří při každém PR:
 
 Pokud máte dotazy nebo potřebujete pomoc s tvorbou doplňku:
 
-- 📚 [Dokumentace addon systému](https://lksmasin.github.io/streamujto-app-website/addon-docs.html)
+- 📚 [Dokumentace addon systému](https://kelp.page/addon-docs.html)
 - 💬 [Discord server](https://discord.gg/your-invite-code)
 - 🐛 [Issues](https://github.com/lksmasin/streamujto-app-community-addons/issues)

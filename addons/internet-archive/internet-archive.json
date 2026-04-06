@@ -4,7 +4,7 @@
     "name": "Internet Archive (Public Domain)",
     "version": "1.1.0",
     "description": "Legální doplněk pro vyhledávání a přehrávání volných filmů z archivu Internet Archive (Public Domain).",
-    "author": "StreamujTo Community",
+    "author": "KELP Community",
     "type": "api",
     "capabilities": ["search", "directStream"],
     "homeUrl": "https://archive.org"

@@ -27,7 +27,7 @@ Legální doplněk pro vyhledávání a přehrávání volně dostupných filmů
 https://raw.githubusercontent.com/lksmasin/streamujto-app-community-addons/main/addons/internet-archive/internet-archive.json
 ```
 
-1. Otevřete StreamujTo → **Nastavení** → **Doplňky úložišť**
+1. Otevřete KELP → **Nastavení** → **Doplňky úložišť**
 2. Klepněte na **+ Přidat** → **Zadat URL adresu**
 3. Vložte URL výše a potvrďte
 
